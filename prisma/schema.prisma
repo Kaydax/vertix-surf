@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model cookies {
+  key   String  @id
+  value String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model game_bots {
+  szMap    String
+  szPlayer String?
+  nTime    Int
+  nStyle   Int
+  szSteam  String
+  szDate   String?
+
+  @@ignore
+}
+
+model game_map {
+  szMap            String @id
+  nMultiplier      Int    @default(1)
+  nTier            Int    @default(0)
+  nType            Int?
+  nBonusMultiplier Int?
+  nPlays           Int    @default(0)
+  nOptions         Int?
+}
+
+model game_times {
+  nID      Int     @id @unique(map: "sqlite_autoindex_game_times_1") @default(autoincrement())
+  szUID    String
+  szSID    String
+  szPlayer String?
+  szMap    String
+  nStyle   Int
+  nTime    Float
+  nPoints  Int
+  vData    String?
+  szDate   String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model game_zones {
+  szMap String
+  nType Int
+  vPos1 String?
+  vPos2 String?
+
+  @@ignore
+}
+
+model playerpdata {
+  infoid String  @id
+  value  String?
+}
+
+model shoutvote_maps {
+  map        String @id
+  roundsago  Int
+  lastplayed BigInt
+}
